@@ -8,7 +8,7 @@ module.exports = function (app) {
 
   app.route('/api/translate')
     .post((req, res) => {
-      console.log(req.body);
+      console.log("req.body", req.body);
       const { text, locale } = req.body;
 
       if (text === "" || text === " ") {
@@ -21,10 +21,11 @@ module.exports = function (app) {
         return;
       };
 
-      if (locale !== "american-to-British" || locale !== "british-to-american") {
+      if (locale !== "american-to-british" && locale !== "british-to-american") {
         res.send({ error: 'Invalid value for locale field' });
         return;
       };
-      res.send({ text: req.body.text, translation: "coming soon" })
+     let translation = translator.translate({text, locale});
+      res.send({ text: req.body.text, translation: translation})
     });
 };
