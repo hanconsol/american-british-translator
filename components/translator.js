@@ -38,14 +38,40 @@ class Translator {
         let previousIndices = [];
         let toBeSliced = [];
         let cleanTranslation = [];
-      
+        let timeRegXAm = /(\d\d)(\:)(\d\d)/;
+        let timeRegXBr = /(\d\d)(\.)(\d\d)/;
+
         let translation = textArr.map((word, index) => {
+
             if (word in lexicon) {
                 didTranslate = true;
                 previousWord = "";
-                previousIndices.push(index)
+                previousIndices.push(index);
                 return `<span class="highlight">${lexicon[word]}</span>`;
-            } else {
+            } else if (timeRegXAm.test(word) && locale === "american-to-british") {
+                didTranslate = true;
+                previousWord = "";
+                previousIndices.push(index);
+                let newTime = word.replace(":", ".");
+                console.log("newTime", newTime);
+                return `<span class="highlight">${newTime}</span>`;
+            } else if (timeRegXBr.test(word) && locale === "british-to-american") {
+                didTranslate = true;
+                previousWord = "";
+                previousIndices.push(index);
+                let newTime = word.replace(".", ":");
+                console.log("newTime", newTime);
+                return `<span class="highlight">${newTime}</span>`;
+            } else if (word.toLowerCase() in lexicon) {
+                didTranslate = true;
+                previousWord = "";
+                previousIndices.push(index);
+                let result = lexicon[word.toLowerCase()];
+                console.log("result", result);
+                result = result.replace(result.charAt(0), result.charAt(0).toUpperCase());
+                return `<span class="highlight">${result}</span>`;
+            }
+            {
                 previousWord = (previousWord + " " + word).trimStart();
                 console.log("previousWord", previousWord, typeof previousWord, "lexicon[previousWord]", lexicon[previousWord])
                 if (previousWord in lexicon) {
