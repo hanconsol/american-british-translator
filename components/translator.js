@@ -47,8 +47,8 @@ class Translator {
         let previousWord = "";
         let previousIndices = [];
         let toBeSliced = [];
-        let timeRegXAm = /(\d\d)(\:)(\d\d)/;
-        let timeRegXBr = /(\d\d)(\.)(\d\d)/;
+        let timeRegXAm = /(\d?\d)(\:)(\d\d)/;
+        let timeRegXBr = /(\d?\d)(\.)(\d\d)/;
         const handleCase = (word) => {
             let result = lexicon[word.toLowerCase()];
             console.log("result", result);
@@ -134,8 +134,12 @@ class Translator {
 
         });
         console.log("translation before slice", translation);
+        toBeSliced.sort((a, b) => b - a);
         console.log("toBeSliced", toBeSliced);
         let count = 0
+        for (let word of toBeSliced) {
+            console.log(translation[word])
+        }
         for (let index of toBeSliced) {
             translation.splice(index, 1);
             count++
