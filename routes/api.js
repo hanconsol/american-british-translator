@@ -10,7 +10,7 @@ module.exports = function (app) {
     .post((req, res) => {
       console.log("req.body", req.body);
       const { text, locale } = req.body;
-
+      // handle input errors
       if (text === "" || text === " ") {
         res.send({ error: 'No text to translate' });
         return;
@@ -25,7 +25,8 @@ module.exports = function (app) {
         res.send({ error: 'Invalid value for locale field' });
         return;
       };
-     let translation = translator.translate({text, locale});
-      res.send({ text: req.body.text, translation: translation})
+      // return results
+      let translation = translator.translate({ text, locale });
+      res.send({ text: req.body.text, translation: translation })
     });
 };
