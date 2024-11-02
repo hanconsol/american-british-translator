@@ -2,16 +2,31 @@ const chai = require('chai');
 const assert = chai.assert;
 
 const Translator = require('../components/translator.js');
+const translator = new Translator;
 
 suite('Unit Tests', () => {
-
+    suite("Translate to British English", () => {
+        test("Mangoes are my favorite fruit.", () => {
+            assert.include(translator.translate({ text: "Mangoes are my favorite fruit.", locale: "american-to-british" }), 'Mangoes are my <span class="highlight">favourite</span> fruit.');
+        });
+        test("I ate yogurt for breakfast.", () => {
+            assert.include(translator.translate({ text: "I ate yogurt for breakfast.", locale: "american-to-british" }), 'I ate <span class="highlight">yoghurt</span> for <span class="highlight">brekky</span>.')
+        });
+        test("We had a party at my friend's condo.", () => {
+            assert.include(translator.translate({ text: "We had a party at my friend's condo.", locale: "american-to-british" }), 'We had a party at my friend\'s <span class="highlight">flat</span>.')
+        });
+        test("Can you toss this in the trashcan for me?", () => {
+            assert.include(translator.translate({ text: "Can you toss this in the trashcan for me?", locale: "american-to-british" }), 'Can you toss this in the <span class="highlight">bin</span> for me?')
+        });
+        test("The parking lot was full.", () => {
+            assert.include(translator.translate({ text: "The parking lot was full.", locale: "american-to-british" }), 'The <span class="highlight">car park</span> was full.')
+        });
+        test("Like a high tech Rube Goldberg machine.", () => {
+            assert.include(translator.translate({ text: "Like a high tech Rube Goldberg machine.", locale: "american-to-british" }), 'Like a high tech <span class="highlight">Heath Robinson device</span>.')
+        });
+    });
 });
 /*
-Translate Mangoes are my favorite fruit. to British English
-Translate I ate yogurt for breakfast. to British English
-Translate We had a party at my friend's condo. to British English
-Translate Can you toss this in the trashcan for me? to British English
-Translate The parking lot was full. to British English
 Translate Like a high tech Rube Goldberg machine. to British English
 Translate To play hooky means to skip class or work. to British English
 Translate No Mr. Bond, I expect you to die. to British English
